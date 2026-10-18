@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090a0b">
+<meta name="description" content="abcdaps-api — API downloader TikTok dan Instagram dengan response JSON, image slide, video, dan audio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="abcdaps-api">
+<meta property="og:title" content="abcdaps-api — Media API">
+<meta property="og:description" content="API downloader TikTok dan Instagram yang ringan, cepat, dan mudah diintegrasikan.">
+<meta property="og:url" content="https://abcdaps-api.vercel.app/">
+<meta property="og:image" content="https://abcdaps-api.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="abcdaps-api — Media API">
+<meta name="twitter:description" content="API downloader TikTok dan Instagram yang ringan, cepat, dan mudah diintegrasikan.">
+<meta name="twitter:image" content="https://abcdaps-api.vercel.app/og-image.png">
+<title>abcdaps-api — Media API</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="abcdaps-api home"><span class="brand-mark"><i class="fa-solid fa-bolt"></i></span><span>abcdaps<span class="brand-muted">-api</span></span></a>
+  <nav><a href="#endpoints">Endpoints</a><a href="/docs">Docs <i class="fa-solid fa-arrow-up-right-from-square tiny"></i></a><a class="github-link" href="https://vercel.com/new" target="_blank" rel="noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Deploy</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow"><span class="live-dot"></span> SIMPLE MEDIA API <span class="eyebrow-sep">/</span> V1</div>
+    <h1>Media tools.<br><span>Built for developers.</span></h1>
+    <p class="hero-copy">Satu API untuk mengambil metadata dan tautan media TikTok serta Instagram. Ringan, respons JSON, siap diintegrasikan.</p>
+    <div class="hero-actions"><a class="button primary" href="#playground">Coba API <i class="fa-solid fa-arrow-right"></i></a><a class="button secondary" href="/docs">Baca dokumentasi <i class="fa-solid fa-book-open"></i></a></div>
+    <div class="terminal-card">
+      <div class="terminal-top"><div class="window-dots"><i></i><i></i><i></i></div><span>request.sh</span><button id="copy-example" class="icon-button" aria-label="Salin contoh"><i class="fa-regular fa-copy"></i></button></div>
+      <pre><code><span class="syntax-prompt">$</span> curl <span class="syntax-url">https://your-domain.vercel.app/api/tiktok</span> \\
+  -G --data-urlencode <span class="syntax-string">'url=https://www.tiktok.com/@user/video/123...'</span></code></pre>
+    </div>
+    <div class="stats-row"><div><strong>02</strong><span>Platform</span></div><div><strong>JSON</strong><span>Response format</span></div><div><strong>Vercel</strong><span>Serverless ready</span></div></div>
+  </section>
+  <section id="endpoints" class="section">
+    <div class="section-heading"><div><div class="eyebrow">API REFERENCE</div><h2>Endpoints</h2></div><a class="text-link" href="/docs">Lihat semua docs <i class="fa-solid fa-arrow-right"></i></a></div>
+    <div class="endpoint-grid">
+      <article class="endpoint-card"><div class="endpoint-icon tiktok"><i class="fa-brands fa-tiktok"></i></div><div class="endpoint-title"><h3>TikTok Extractor</h3><span class="method">GET / POST</span></div><p>Video tanpa watermark jika tersedia, image slide, author, statistik, musik, dan metadata.</p><div class="endpoint-path"><code>/api/tiktok?url=...</code><button class="copy-path" data-copy="/api/tiktok?url=https%3A%2F%2Fwww.tiktok.com%2F" aria-label="Salin endpoint"><i class="fa-regular fa-copy"></i></button></div><div class="tag-row"><span>Video</span><span>Image slide</span><span>Metadata</span></div></article>
+      <article class="endpoint-card"><div class="endpoint-icon instagram"><i class="fa-brands fa-instagram"></i></div><div class="endpoint-title"><h3>Instagram Extractor</h3><span class="method">GET / POST</span></div><p>Ambil tautan video, gambar carousel, thumbnail, dan mode ekstraksi audio.</p><div class="endpoint-path"><code>/api/instagram?url=...</code><button class="copy-path" data-copy="/api/instagram?url=https%3A%2F%2Fwww.instagram.com%2F" aria-label="Salin endpoint"><i class="fa-regular fa-copy"></i></button></div><div class="tag-row"><span>Reels</span><span>Carousel</span><span>Audio mode</span></div></article>
+    </div>
+  </section>
+  <section id="playground" class="section playground-section">
+    <div class="section-heading"><div><div class="eyebrow">LIVE PLAYGROUND</div><h2>Test endpoint</h2></div><span class="beta-pill"><span class="live-dot"></span> Live request</span></div>
+    <div class="playground-card">
+      <div class="platform-tabs" role="tablist"><button class="platform-tab active" data-platform="tiktok"><i class="fa-brands fa-tiktok"></i> TikTok</button><button class="platform-tab" data-platform="instagram"><i class="fa-brands fa-instagram"></i> Instagram</button></div>
+      <form id="api-form">
+        <label for="media-url">URL media</label>
+        <div class="input-wrap"><i class="fa-solid fa-link"></i><input id="media-url" name="url" type="url" placeholder="https://www.tiktok.com/@user/video/..." required autocomplete="url"><button type="button" id="clear-url" class="clear-button" aria-label="Hapus URL"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="form-bottom"><label class="audio-option" id="audio-option"><input id="audio-mode" type="checkbox"> <span>Mode audio Instagram</span></label><button class="button primary run-button" type="submit"><i class="fa-solid fa-play"></i> Jalankan <span id="run-spinner"></span></button></div>
+      </form>
+      <div class="result-head"><span><i class="fa-solid fa-terminal"></i> Response</span><button id="copy-result" class="text-link" disabled><i class="fa-regular fa-copy"></i> Salin JSON</button></div>
+      <pre id="result" class="result-output"><span class="muted">// Hasil response akan muncul di sini.</span></pre>
+      <div id="result-status" class="result-status">Siap menerima request</div>
+    </div>
+    <p class="notice"><i class="fa-solid fa-circle-info"></i> Ketersediaan hasil bergantung pada akses platform dan layanan sumber. Gunakan hanya untuk konten yang boleh Anda akses.</p>
+  </section>
+  <section class="bottom-cta"><div class="cta-icon"><i class="fa-solid fa-code"></i></div><div><h2>Build something useful.</h2><p>Mulai integrasi dengan dokumentasi endpoint dan contoh kode.</p></div><a class="button primary" href="/docs">Buka dokumentasi <i class="fa-solid fa-arrow-right"></i></a></section>
+</main>
+<footer><a class="brand" href="/"><span class="brand-mark"><i class="fa-solid fa-bolt"></i></span><span>abcdaps<span class="brand-muted">-api</span></span></a><span>Built for builders <span class="footer-dot">·</span> v1.0.0</span><a href="/docs">API Docs <i class="fa-solid fa-arrow-up-right-from-square tiny"></i></a></footer>
+<script src="/app.js" defer></script>
+</body>
+</html>
