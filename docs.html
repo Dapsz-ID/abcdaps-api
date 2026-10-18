@@ -29,10 +29,10 @@
 <aside class="docs-sidebar"><span class="eyebrow">DOCUMENTATION</span><a href="#intro">Pengenalan</a><a href="#quickstart">Quick start</a><a href="#tiktok">TikTok endpoint</a><a href="#instagram">Instagram endpoint</a><a href="#response">Response format</a><a href="#errors">Error codes</a><a href="#limits">Catatan penggunaan</a></aside>
 <article class="docs-content">
 <div class="eyebrow"><span class="live-dot"></span> API REFERENCE / V1</div><h1>API <span>Documentation.</span></h1><p class="docs-lead">Dokumentasi penggunaan endpoint abcdaps-api untuk mengambil metadata dan URL media dari TikTok dan Instagram.</p>
-<section id="intro" class="docs-section"><h2>01. Pengenalan</h2><p>API menerima URL konten publik dan mengembalikan hasil dalam JSON. Endpoint menerima request <code>GET</code> maupun <code>POST</code>. Ganti <code>https://your-domain.vercel.app</code> dengan domain deployment Anda.</p><div class="callout"><i class="fa-solid fa-circle-info"></i><span>URL media dan respons dapat bergantung pada perubahan platform serta ketersediaan layanan sumber pihak ketiga.</span></div></section>
-<section id="quickstart" class="docs-section"><h2>02. Quick start</h2><p>Contoh request menggunakan cURL:</p><div class="code-label">cURL · GET</div><pre><code>curl -G "https://your-domain.vercel.app/api/tiktok" \\
+<section id="intro" class="docs-section"><h2>01. Pengenalan</h2><p>API menerima URL konten publik dan mengembalikan hasil dalam JSON. Endpoint menerima request <code>GET</code> maupun <code>POST</code>. <div class="callout"><i class="fa-solid fa-circle-info"></i><span>URL media dan respons dapat bergantung pada perubahan platform serta ketersediaan layanan sumber pihak ketiga.</span></div></section>
+<section id="quickstart" class="docs-section"><h2>02. Quick start</h2><p>Contoh request menggunakan cURL:</p><div class="code-label">cURL · GET</div><pre><code>curl -G "https://abcdaps-api.vercel.app/api/tiktok" \\
   --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890123456789"</code></pre><div class="code-label">JavaScript · fetch</div><pre><code>const mediaUrl = "https://www.instagram.com/reel/REPLACE_ME/";
-const endpoint = new URL("https://your-domain.vercel.app/api/instagram");
+const endpoint = new URL("https://abcdaps-api.vercel.app/api/instagram");
 endpoint.searchParams.set("url", mediaUrl);
 
 const response = await fetch(endpoint);
@@ -46,7 +46,7 @@ console.log(result);</code></pre></section>
     url: "https://www.tiktok.com/@user/video/1234567890123456789"
   })
 });</code></pre><p>Jenis media ditandai melalui <code>data.type</code>: <code>video</code> atau <code>image_slide</code>. Video dapat berisi <code>no_watermark_url</code>, <code>watermark_url</code>, <code>adaptive_bitrates</code>, dimensi, dan durasi.</p></section>
-<section id="instagram" class="docs-section"><h2>04. Instagram endpoint</h2><div class="endpoint-doc"><span class="method">GET / POST</span><code>/api/instagram</code></div><p>Mengambil tautan video, gambar carousel, thumbnail, atau hasil mode audio.</p><table><thead><tr><th>Parameter</th><th>Wajib</th><th>Keterangan</th></tr></thead><tbody><tr><td><code>url</code></td><td>Ya</td><td>URL Instagram Reel, post, atau konten yang didukung.</td></tr><tr><td><code>mode=audio</code></td><td>Tidak</td><td>Memanggil sumber audio dan mengembalikan daftar media/audio yang tersedia.</td></tr></tbody></table><div class="code-label">Mode audio</div><pre><code>curl -G "https://your-domain.vercel.app/api/instagram" \\
+<section id="instagram" class="docs-section"><h2>04. Instagram endpoint</h2><div class="endpoint-doc"><span class="method">GET / POST</span><code>/api/instagram</code></div><p>Mengambil tautan video, gambar carousel, thumbnail, atau hasil mode audio.</p><table><thead><tr><th>Parameter</th><th>Wajib</th><th>Keterangan</th></tr></thead><tbody><tr><td><code>url</code></td><td>Ya</td><td>URL Instagram Reel, post, atau konten yang didukung.</td></tr><tr><td><code>mode=audio</code></td><td>Tidak</td><td>Memanggil sumber audio dan mengembalikan daftar media/audio yang tersedia.</td></tr></tbody></table><div class="code-label">Mode audio</div><pre><code>curl -G "https://abcdaps-api.vercel.app/api/instagram" \\
   --data-urlencode "url=https://www.instagram.com/reel/REPLACE_ME/" \\
   --data-urlencode "mode=audio"</code></pre></section>
 <section id="response" class="docs-section"><h2>05. Response format</h2><p>Respons sukses menggunakan struktur konsisten:</p><pre><code>{
