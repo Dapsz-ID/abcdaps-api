@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090a0b">
+<meta name="description" content="Dokumentasi API abcdaps-api untuk TikTok dan Instagram.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="abcdaps-api">
+<meta property="og:title" content="Dokumentasi API — abcdaps-api">
+<meta property="og:description" content="Panduan endpoint, parameter, response, dan contoh integrasi API.">
+<meta property="og:image" content="https://abcdaps-api.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dokumentasi API — abcdaps-api">
+<meta name="twitter:description" content="Panduan endpoint, parameter, response, dan contoh integrasi API.">
+<meta name="twitter:image" content="https://abcdaps-api.vercel.app/og-image.png">
+<title>API Docs — abcdaps-api</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/docs.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/"><span class="brand-mark"><i class="fa-solid fa-bolt"></i></span><span>abcdaps<span class="brand-muted">-api</span></span></a><nav><a href="/#endpoints">Endpoints</a><a href="/docs">Docs</a><a class="github-link" href="/"> <i class="fa-solid fa-arrow-left"></i> Kembali</a></nav></header>
+<main class="docs-layout">
+<aside class="docs-sidebar"><span class="eyebrow">DOCUMENTATION</span><a href="#intro">Pengenalan</a><a href="#quickstart">Quick start</a><a href="#tiktok">TikTok endpoint</a><a href="#instagram">Instagram endpoint</a><a href="#response">Response format</a><a href="#errors">Error codes</a><a href="#limits">Catatan penggunaan</a></aside>
+<article class="docs-content">
+<div class="eyebrow"><span class="live-dot"></span> API REFERENCE / V1</div><h1>API <span>Documentation.</span></h1><p class="docs-lead">Dokumentasi penggunaan endpoint abcdaps-api untuk mengambil metadata dan URL media dari TikTok dan Instagram.</p>
+<section id="intro" class="docs-section"><h2>01. Pengenalan</h2><p>API menerima URL konten publik dan mengembalikan hasil dalam JSON. Endpoint menerima request <code>GET</code> maupun <code>POST</code>. Ganti <code>https://your-domain.vercel.app</code> dengan domain deployment Anda.</p><div class="callout"><i class="fa-solid fa-circle-info"></i><span>URL media dan respons dapat bergantung pada perubahan platform serta ketersediaan layanan sumber pihak ketiga.</span></div></section>
+<section id="quickstart" class="docs-section"><h2>02. Quick start</h2><p>Contoh request menggunakan cURL:</p><div class="code-label">cURL · GET</div><pre><code>curl -G "https://your-domain.vercel.app/api/tiktok" \\
+  --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890123456789"</code></pre><div class="code-label">JavaScript · fetch</div><pre><code>const mediaUrl = "https://www.instagram.com/reel/REPLACE_ME/";
+const endpoint = new URL("https://your-domain.vercel.app/api/instagram");
+endpoint.searchParams.set("url", mediaUrl);
+
+const response = await fetch(endpoint);
+const result = await response.json();
+
+console.log(result);</code></pre></section>
+<section id="tiktok" class="docs-section"><h2>03. TikTok endpoint</h2><div class="endpoint-doc"><span class="method">GET / POST</span><code>/api/tiktok</code></div><p>Ekstraksi video, image slide, profil kreator, statistik, musik, challenge, dan variasi bitrate bila tersedia.</p><h3>Query parameters</h3><table><thead><tr><th>Parameter</th><th>Wajib</th><th>Keterangan</th></tr></thead><tbody><tr><td><code>url</code></td><td>Ya</td><td>URL video/foto TikTok atau ID video yang didukung.</td></tr></tbody></table><div class="code-label">POST · JSON</div><pre><code>fetch("/api/tiktok", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    url: "https://www.tiktok.com/@user/video/1234567890123456789"
+  })
+});</code></pre><p>Jenis media ditandai melalui <code>data.type</code>: <code>video</code> atau <code>image_slide</code>. Video dapat berisi <code>no_watermark_url</code>, <code>watermark_url</code>, <code>adaptive_bitrates</code>, dimensi, dan durasi.</p></section>
+<section id="instagram" class="docs-section"><h2>04. Instagram endpoint</h2><div class="endpoint-doc"><span class="method">GET / POST</span><code>/api/instagram</code></div><p>Mengambil tautan video, gambar carousel, thumbnail, atau hasil mode audio.</p><table><thead><tr><th>Parameter</th><th>Wajib</th><th>Keterangan</th></tr></thead><tbody><tr><td><code>url</code></td><td>Ya</td><td>URL Instagram Reel, post, atau konten yang didukung.</td></tr><tr><td><code>mode=audio</code></td><td>Tidak</td><td>Memanggil sumber audio dan mengembalikan daftar media/audio yang tersedia.</td></tr></tbody></table><div class="code-label">Mode audio</div><pre><code>curl -G "https://your-domain.vercel.app/api/instagram" \\
+  --data-urlencode "url=https://www.instagram.com/reel/REPLACE_ME/" \\
+  --data-urlencode "mode=audio"</code></pre></section>
+<section id="response" class="docs-section"><h2>05. Response format</h2><p>Respons sukses menggunakan struktur konsisten:</p><pre><code>{
+  "success": true,
+  "status_code": 200,
+  "data": {
+    "type": "video",
+    "source_url": "https://..."
+  },
+  "timestamp": 1790000000000
+}</code></pre><p>Field di dalam <code>data</code> mengikuti jenis platform dan media yang ditemukan. Timestamp menggunakan Unix epoch dalam milidetik.</p></section>
+<section id="errors" class="docs-section"><h2>06. Error codes</h2><table><thead><tr><th>HTTP</th><th>Code</th><th>Makna</th></tr></thead><tbody><tr><td>400</td><td><code>URL_REQUIRED</code></td><td>Parameter URL tidak dikirim.</td></tr><tr><td>400</td><td><code>INVALID_URL</code></td><td>URL tidak valid.</td></tr><tr><td>400</td><td><code>UNSUPPORTED_HOST</code></td><td>Host tidak sesuai endpoint.</td></tr><tr><td>405</td><td><code>METHOD_NOT_ALLOWED</code></td><td>Metode selain GET/POST digunakan.</td></tr><tr><td>502</td><td><code>EXTRACTION_FAILED</code></td><td>Ekstraksi atau sumber upstream gagal.</td></tr></tbody></table></section>
+<section id="limits" class="docs-section"><h2>07. Catatan penggunaan</h2><ul><li>Gunakan konten yang Anda miliki atau memiliki izin untuk mengunduh.</li><li>Konten privat, dihapus, dibatasi wilayah, atau memerlukan login mungkin tidak bisa diekstrak.</li><li>Provider pihak ketiga dapat berubah, membatasi request, atau tidak tersedia sewaktu-waktu.</li><li>Untuk deployment publik, tambahkan rate limiting dan monitoring sebelum membuka akses luas.</li><li>Jangan mengandalkan URL hasil ekstraksi sebagai penyimpanan permanen.</li></ul></section>
+<a class="button primary docs-home" href="/">Kembali ke beranda <i class="fa-solid fa-arrow-right"></i></a>
+</article>
+</main>
+<footer><a class="brand" href="/"><span class="brand-mark"><i class="fa-solid fa-bolt"></i></span><span>abcdaps<span class="brand-muted">-api</span></span></a><span>Built for builders <span class="footer-dot">·</span> v1.0.0</span><a href="/">Home <i class="fa-solid fa-arrow-up-right-from-square tiny"></i></a></footer>
+</body></html>
